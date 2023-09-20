@@ -41,6 +41,7 @@
 (require 'meow-core)
 (require 'meow-cheatsheet)
 (require 'meow-tutor)
+(require 'mq-mark-mode)
 
 (provide 'meow)
 ;;; meow.el ends here
