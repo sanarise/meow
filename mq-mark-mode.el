@@ -60,11 +60,8 @@
   (interactive)
   (let ((pt (point)))
     (meow-back-to-indentation)
-    ;; Есть проблема с тем, что сбрасывает выделение, если оно уже есть.
-    ;; Но фикс ниже ломает логику выделения многострочного разрыва, если стоять на пустой строке.
-    ;; (when (and (not mark-active) (eq pt (point)))
-    (when (eq pt (point))
-      (command-execute 'meow-join))))
+    (when (and (not mark-active) (eq pt (point)))
+      (funcall-interactively 'meow-join '(4)))))
 
 (defun mq-to-eol ()
   (interactive)
