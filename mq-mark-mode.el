@@ -60,20 +60,24 @@
   (interactive)
   (let ((pt (point)))
     (meow-back-to-indentation)
+    ;; Есть проблема с тем, что сбрасывает выделение, если оно уже есть.
+    ;; Но фикс ниже ломает логику выделения многострочного разрыва, если стоять на пустой строке.
+    ;; (when (and (not mark-active) (eq pt (point)))
     (when (eq pt (point))
       (command-execute 'meow-join))))
 
-(defun mq-to-end-of-line ()
+(defun mq-to-eol ()
   (interactive)
   (let ((pt (point)))
-    (if (or (not mark-active) (eq (point) (mark)))
-        (progn
-          (end-of-line)
-          (when (eq pt (point))
-            (push-mark)
-            (activate-mark)
-            (beginning-of-line)))
-      (command-execute 'meow-reverse))))
+    (end-of-line)
+    (when (eq pt (point))
+      (beginning-of-line))))
+
+(defun mq-open-below ()
+  (interactive)
+  (if mark-active
+      (command-execute 'meow-reverse)
+    (command-execute 'meow-open-below)))
 
 (defun mq-forward-word (&optional arg)
   (interactive "^p")
@@ -166,6 +170,32 @@
     (newline))
   (indent-according-to-mode)
   (yank))
+
+(defun mq-move-region (beg end arg)
+  (let ((region (buffer-substring-no-properties beg end)))
+    (delete-region beg end)
+    (delete-char 1)
+    (forward-line (- arg 1))
+    (goto-char (line-end-position))
+    (newline)
+    (insert region)))
+
+(defun mq-move-line (arg)
+  (if (<= (+ (line-number-at-pos) arg) (count-lines (point-min) (point-max)))
+      (let ((column (current-column))
+            (beg (line-beginning-position))
+            (end (line-end-position)))
+        (mq-move-region beg end arg)
+        (move-to-column column))
+    (message "Can not move line further down")))
+
+(defun mq-move-line-down (arg)
+  (interactive "p")
+  (mq-move-line arg))
+
+(defun mq-move-line-up (arg)
+  (interactive "p")
+  (mq-move-line (- arg)))
 
 (provide 'mq-mark-mode)
 ;;; mq-mark-mode.el ends here
