@@ -63,12 +63,11 @@
     (when (and (not mark-active) (eq pt (point)))
       (funcall-interactively 'meow-join '(4)))))
 
-(defun mq-to-eol ()
+(defun mq-toggle-eol ()
   (interactive)
-  (let ((pt (point)))
-    (end-of-line)
-    (when (eq pt (point))
-      (beginning-of-line))))
+  (if (eq (point) (line-end-position))
+      (beginning-of-line)
+    (end-of-line)))
 
 (defun mq-open-below ()
   (interactive)
