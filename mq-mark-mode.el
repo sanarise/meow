@@ -143,14 +143,6 @@
   (interactive "P\np")
   (funcall-interactively #'mq-mark-by-command #'mq-forward-to-symbol arg allow-extend))
 
-(defun mq-mark-backward-word (&optional arg allow-extend)
-  (interactive "P\np")
-  (funcall-interactively #'mq-mark-by-command #'mq-prev-word arg allow-extend))
-
-(defun mq-mark-to-word (&optional arg allow-extend)
-  (interactive "P\np")
-  (funcall-interactively #'mq-mark-by-command #'mq-next-word arg allow-extend))
-
 (defun mq-mark-forward-paragraph (&optional arg allow-extend)
   (interactive "P\np")
   (funcall-interactively #'mq-mark-by-command #'mq-forward-paragraph arg allow-extend))
@@ -192,6 +184,43 @@
 (defun mq-move-line-up (arg)
   (interactive "p")
   (mq-move-line (- arg)))
+
+(defvar-local mq--insert-exit-p nil)
+
+(defun mq-insert-exit ()
+  "Switch to normal state"
+  (interactive)
+  (setq mq--insert-exit-p t)
+  (command-execute 'meow-insert-exit))
+
+(defun mq--check-selection ()
+  (when mq--insert-exit-p
+    (setq mq--insert-exit-p nil)
+    (meow--cancel-selection)))
+
+(defun mq-next-line (arg)
+  "Next line"
+  (interactive "p")
+  (mq--check-selection)
+  (call-interactively 'next-line))
+
+(defun mq-prev-line (arg)
+  "Prev line"
+  (interactive "p")
+  (mq--check-selection)
+  (call-interactively 'previous-line))
+
+(defun mq-left-char (arg)
+  "Left char"
+  (interactive "p")
+  (mq--check-selection)
+  (call-interactively 'left-char))
+
+(defun mq-right-char (arg)
+  "Right char"
+  (interactive "p")
+  (mq--check-selection)
+  (call-interactively 'right-char))
 
 (provide 'mq-mark-mode)
 ;;; mq-mark-mode.el ends here

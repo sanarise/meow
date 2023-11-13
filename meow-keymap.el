@@ -32,7 +32,7 @@
 
 (defvar meow-insert-state-keymap
   (let ((keymap (make-keymap)))
-    (define-key keymap [escape] 'meow-insert-exit)
+    (define-key keymap [escape] 'mq-insert-exit)
     (define-key keymap [remap kmacro-start-macro] #'meow-start-kmacro)
     (define-key keymap [remap kmacro-start-macro-or-insert-counter] #'meow-start-kmacro-or-insert-counter)
     (define-key keymap [remap kmacro-end-or-call-macro] #'meow-end-or-call-kmacro)
