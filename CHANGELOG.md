@@ -2,6 +2,21 @@
 
 ## Master (Unreleased)
 
+## 1.4.5 (2024-02-11)
+
+### Bugs fixed
+* [#557](https://github.com/meow-edit/meow/issues/557) Fix the shim code for `wdired`.
+* [#546](https://github.com/meow-edit/meow/issues/546) Fix `meow-back-symbol` that unconditionally reverse direction.
+* [#545](https://github.com/meow-edit/meow/issues/545) Fix position hint before tabs with width 2.
+* [#539](https://github.com/meow-edit/meow/issues/539) Fix beacon change with consecutive characters.
+* [#373](https://github.com/meow-edit/meow/issues/373) Do not cancel selection when entering beacon mode.
+* [#514](https://github.com/meow-edit/meow/issues/514) Fix meow-esc in `emacsclient -t`.
+
+### Enhancements
+* [#517](https://github.com/meow-edit/meow/pull/517) Consider local keybindings when moving commands for the Motion state.
+* [#512](https://github.com/meow-edit/meow/pull/512) Add shim for realgud.
+* [#503](https://github.com/meow-edit/meow/pull/503) Add shim for sly.
+
 ## 1.4.4 (2023-08-23)
 
 ### Bugs fixed
